@@ -1,0 +1,8 @@
+(a) 8 commits
+(b) It was last modified Thursday August 20, 2015 at 18:05:41
+(c) .gitattributes, README.txt.txt, .classpath, .gitignore, .project, HardwoodSeller.java, WoodItem.java
+(d) WoodItem.java was changed once, with 4 insertions and 4 deletions, other than that, there were no changed to the src directory after the initial commit. 
+(e) Git status shows the working tree status, while git log shows the commit logs. Essentially it's a matter of seeing the difference between what is pending(status) and what has happened(log).
+(f) 'git log main.java' or 'git log --stat main.java'. The latter provides more detailed information as to insertions and deletions to files. 
+(g) 'git log --grep=transaction'. --grep specifies to grep against commit logs.
+(h) 'git log --author=Lauren --since=01/05/2014 --until=06/14/2015'
