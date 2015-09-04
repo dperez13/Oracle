@@ -114,9 +114,33 @@ public class HardwoodSeller {
 	   return orderInfo;
    }
 	
-	public Double deliveryTime(){
+	public Double deliveryTime(ArrayList<WoodValuePair> orders){
 		Double deliveryETA = 0.0;
+		Double slowestDeliveryTime = 0.0;
+		for(WoodValuePair instance: orders) {
+			Double temp = instance.getWood().getBaseDeliveryTime();
+			if(instance.getAmount() >= 101 && instance.getAmount() <= 200)
+				temp *= 2;
+			else if(instance.getAmount() >= 201 && instance.getAmount() <= 300)
+				temp *= 3;
+			else if(instance.getAmount() >= 301 && instance.getAmount() <= 400)
+				temp *= 4;
+			else if(instance.getAmount() >= 401 && instance.getAmount() <= 500)
+				temp *= 5;
+			else if(instance.getAmount() >= 501 && instance.getAmount() <= 1000)
+				temp *= 5.5;
+			if( temp > slowestDeliveryTime)
+				slowestDeliveryTime = temp;
+		}
+		deliveryETA = slowestDeliveryTime;
 		return deliveryETA;
+	}
+	public Double calculateTotalPrice(ArrayList<WoodValuePair> orders) {
+		Double runningTotal = 0.0;
+		for(WoodValuePair instance: orders){
+			runningTotal += (instance.getAmount()*instance.getWood().getPrice());
+		}
+		return runningTotal;
 	}
 	
 }
