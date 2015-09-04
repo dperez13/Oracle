@@ -42,6 +42,8 @@ public class HardwoodSeller {
 		ArrayList<String> orderStrings = new ArrayList<String>();
 		ArrayList<ArrayList<String> > buyerInformation = new ArrayList<ArrayList<String>>(); //First dimension contains a single buyer, second dimension holds full name, address, date.
 		ArrayList<ArrayList<WoodValuePair>> orderInformation = new ArrayList<ArrayList<WoodValuePair>>(); 
+		ArrayList<Double> deliveryTimes = new ArrayList<Double>();
+		ArrayList<Double> totalPrices = new ArrayList<Double>(); 
 		theDealer.readInputFile(args[0], buyerStrings, orderStrings);
 		for(String buyer: buyerStrings){
 			ArrayList<String> temp = theDealer.initBuyerInfo(buyer);
@@ -50,6 +52,16 @@ public class HardwoodSeller {
 		for(String order: orderStrings){
 			ArrayList<WoodValuePair> temp = theDealer.initOrderInfo(order);
 			orderInformation.add(temp);
+		}
+		for(int i = 0; i < buyerStrings.size(); ++i)
+		{
+			deliveryTimes.add(theDealer.deliveryTime(orderInformation.get(i)));
+			totalPrices.add(theDealer.calculateTotalPrice(orderInformation.get(i)));
+		}
+		for(int i = 0; i < buyerStrings.size();++i) {
+		System.out.println("BUYER Number "+ (i+1) +"\nFullname: " + buyerStrings.get(i).get(0) + "\nAddress: " + buyerStrings.get(i).get(1)
+				+ "\n List of wood: " + "Stub" + "\nEstimated Delivery Time: " + deliveryTimes.get(i) + "Total Price: "
+				+ totalPrices.get(i));
 		}
 	}
 	//Modified read array to take lists that will be initialized here. 
@@ -118,7 +130,8 @@ public class HardwoodSeller {
 		Double deliveryETA = 0.0;
 		Double slowestDeliveryTime = 0.0;
 		for(WoodValuePair instance: orders) {
-			Double temp = instance.getWood().getBaseDeliveryTime();
+			WoodItem tempItem = instance.getWood();
+			Double temp = tempItem.getBaseDeliveryTime();
 			if(instance.getAmount() >= 101 && instance.getAmount() <= 200)
 				temp *= 2;
 			else if(instance.getAmount() >= 201 && instance.getAmount() <= 300)
@@ -138,7 +151,8 @@ public class HardwoodSeller {
 	public Double calculateTotalPrice(ArrayList<WoodValuePair> orders) {
 		Double runningTotal = 0.0;
 		for(WoodValuePair instance: orders){
-			runningTotal += (instance.getAmount()*instance.getWood().getPrice());
+			WoodItem tempItem = instance.getWood();
+			runningTotal += (instance.getAmount()* tempItem.getPrice());
 		}
 		return runningTotal;
 	}
